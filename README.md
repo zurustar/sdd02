@@ -64,3 +64,8 @@ The application uses a SQLite database stored at `app.db` by default. To use ano
 - Use `flask init-db` any time you need to reset your local database schema.
 - Update `requirements.txt` when adding or upgrading dependencies.
 - Keep this README in sync with the user-facing functionality and setup steps as the project evolves.
+
+## Testing
+
+- The automated test suite uses `pytest`. After installing the dependencies in `requirements.txt`, run `pytest` from the project root to execute all tests.
+- Refer to `docs/testing_strategy.md` for the broader testing philosophy that guides the suite and outlines the scenarios we aim to cover.
