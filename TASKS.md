@@ -2,17 +2,18 @@
 
 - [x] Set up the Flask project structure and initial files.
 - [x] Initialize the database.
-- [x] Implement user registration and login functionality.
-- [x] Create a basic layout with navigation.
-- [x] Implement the main calendar view for schedules.
-- [x] Implement schedule creation and editing functionality.
-- [x] Implement schedule deletion functionality.
-- [x] Implement meeting room management (CRUD).
-- [x] Implement team schedule sharing features.
-- [x] Document user-facing requirements and usage instructions in README.md.
-- [x] Update agent instructions to keep README.md current with code changes.
-- [x] Fix registration password hashing compatibility.
-- [x] Document a comprehensive web-service testing strategy in markdown.
-- [x] Implement automated tests aligned with the documented strategy.
-- [x] Audit existing features to ensure required automated test coverage.
-- [x] Add missing automated tests for previously implemented functionality.
+- [ ] Set up testing framework (pytest).
+    - [ ] Install testing libraries (pytest, pytest-flask).
+    - [ ] Create a basic test file (e.g., tests/test_basic.py).
+    - [ ] Run pytest to verify setup.
+- [ ] Implement user registration and login functionality.
+- [ ] Write tests for authentication (registration, login, logout).
+- [ ] Create a basic layout with navigation.
+- [ ] Implement the main calendar view for schedules.
+- [ ] Implement schedule creation and editing functionality.
+- [ ] Write tests for schedule CRUD operations.
+- [ ] Implement schedule deletion functionality.
+- [ ] Implement meeting room management (CRUD).
+- [ ] Write tests for room management.
+- [ ] Implement team schedule sharing features.
+- [ ] Write tests for sharing features.

@@ -18,11 +18,14 @@ def _populate_schedule_form_choices(form, *, current_user):
     ]
 
 
-@app.route('/')
+from flask import Blueprint, render_template
+
+bp = Blueprint('main', __name__)
+
+@bp.route('/')
+@bp.route('/index')
 def index():
-    if current_user.is_authenticated:
-        return redirect(url_for('calendar'))
-    return render_template('index.html', title='Welcome')
+    return render_template('index.html', title='Home')
 
 
 @app.route('/register', methods=['GET', 'POST'])

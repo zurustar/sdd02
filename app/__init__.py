@@ -3,11 +3,20 @@ from config import Config
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
 
-app = Flask(__name__)
-app.config.from_object(Config)
-db = SQLAlchemy(app)
-login = LoginManager(app)
-login.login_view = 'login'
-login.login_message_category = 'info'
+db = SQLAlchemy()
+login = LoginManager()
 
-from app import routes, models, cli
+def create_app(config_class=Config):
+    app = Flask(__name__)
+    app.config.from_object(config_class)
+
+    db.init_app(app)
+    login.init_app(app)
+    login.login_view = 'main.login' # Blueprint名を指定
+    login.login_message_category = 'info'
+
+    from app.routes import bp as main_bp
+    app.register_blueprint(main_bp)
+
+    return app
+
