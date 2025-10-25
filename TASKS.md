@@ -14,3 +14,5 @@
 - [x] Fix registration password hashing compatibility.
 - [x] Document a comprehensive web-service testing strategy in markdown.
 - [x] Implement automated tests aligned with the documented strategy.
+- [x] Audit existing features to ensure required automated test coverage.
+- [x] Add missing automated tests for previously implemented functionality.
