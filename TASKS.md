@@ -1,11 +1,11 @@
 # Tasks
 
 - [x] Set up the Flask project structure and initial files.
-- [ ] Initialize the database.
-- [ ] Implement user registration and login functionality.
-- [ ] Create a basic layout with navigation.
-- [ ] Implement the main calendar view for schedules.
-- [ ] Implement schedule creation and editing functionality.
-- [ ] Implement schedule deletion functionality.
-- [ ] Implement meeting room management (CRUD).
-- [ ] Implement team schedule sharing features.
+- [x] Initialize the database.
+- [x] Implement user registration and login functionality.
+- [x] Create a basic layout with navigation.
+- [x] Implement the main calendar view for schedules.
+- [x] Implement schedule creation and editing functionality.
+- [x] Implement schedule deletion functionality.
+- [x] Implement meeting room management (CRUD).
+- [x] Implement team schedule sharing features.
