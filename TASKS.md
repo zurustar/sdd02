@@ -12,3 +12,5 @@
 - [x] Document user-facing requirements and usage instructions in README.md.
 - [x] Update agent instructions to keep README.md current with code changes.
 - [x] Fix registration password hashing compatibility.
+- [x] Document a comprehensive web-service testing strategy in markdown.
+- [x] Implement automated tests aligned with the documented strategy.
