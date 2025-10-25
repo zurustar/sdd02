@@ -24,7 +24,11 @@ class User(UserMixin, db.Model):
     )
 
     def set_password(self, password):
-        self.password_hash = generate_password_hash(password)
+        """Generate a password hash using a broadly supported algorithm."""
+        # Some Python builds omit ``hashlib.scrypt`` which Werkzeug may default to
+        # when selecting a hashing algorithm. Explicitly request PBKDF2 to stay
+        # compatible across environments that lack ``scrypt`` support.
+        self.password_hash = generate_password_hash(password, method="pbkdf2:sha256")
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
