@@ -1,10 +1,12 @@
-from flask import abort, flash, redirect, render_template, request, url_for
+from flask import Blueprint, abort, flash, redirect, render_template, request, url_for
 from flask_login import current_user, login_required, login_user, logout_user
 from sqlalchemy import or_
 
-from app import app, db
+from app import db
 from app.forms import LoginForm, RegistrationForm, RoomForm, ScheduleForm
 from app.models import Room, Schedule, User
+
+bp = Blueprint('main', __name__)
 
 
 def _populate_schedule_form_choices(form, *, current_user):
@@ -18,20 +20,16 @@ def _populate_schedule_form_choices(form, *, current_user):
     ]
 
 
-from flask import Blueprint, render_template
-
-bp = Blueprint('main', __name__)
-
 @bp.route('/')
 @bp.route('/index')
 def index():
     return render_template('index.html', title='Home')
 
 
-@app.route('/register', methods=['GET', 'POST'])
+@bp.route('/register', methods=['GET', 'POST'])
 def register():
     if current_user.is_authenticated:
-        return redirect(url_for('calendar'))
+        return redirect(url_for('main.calendar'))
     form = RegistrationForm()
     if form.validate_on_submit():
         if User.query.filter_by(username=form.username.data).first():
@@ -42,14 +40,14 @@ def register():
         db.session.add(user)
         db.session.commit()
         flash('Registration successful. You can now log in.', 'success')
-        return redirect(url_for('login'))
+        return redirect(url_for('main.login'))
     return render_template('register.html', title='Register', form=form)
 
 
-@app.route('/login', methods=['GET', 'POST'])
+@bp.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('calendar'))
+        return redirect(url_for('main.calendar'))
     form = LoginForm()
     if form.validate_on_submit():
         user = User.query.filter_by(username=form.username.data).first()
@@ -58,19 +56,19 @@ def login():
             return render_template('login.html', title='Log In', form=form)
         login_user(user)
         flash('Welcome back!', 'success')
-        return redirect(url_for('calendar'))
+        return redirect(url_for('main.calendar'))
     return render_template('login.html', title='Log In', form=form)
 
 
-@app.route('/logout')
+@bp.route('/logout')
 @login_required
 def logout():
     logout_user()
     flash('You have been logged out.', 'info')
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
 
-@app.route('/calendar')
+@bp.route('/calendar')
 @login_required
 def calendar():
     schedules = Schedule.query.filter(
@@ -82,7 +80,7 @@ def calendar():
     return render_template('calendar.html', title='Calendar', schedules=schedules)
 
 
-@app.route('/schedules/new', methods=['GET', 'POST'])
+@bp.route('/schedules/new', methods=['GET', 'POST'])
 @login_required
 def create_schedule():
     form = ScheduleForm()
@@ -98,20 +96,19 @@ def create_schedule():
             location=form.location.data,
             owner=current_user
         )
+        db.session.add(schedule)
         if form.room.data:
-            room = Room.query.get(form.room.data)
-            schedule.room = room
+            schedule.room = db.session.get(Room, form.room.data)
         participant_ids = [pid for pid in form.participants.data if pid != current_user.id]
         if participant_ids:
             schedule.participants = User.query.filter(User.id.in_(participant_ids)).all()
-        db.session.add(schedule)
         db.session.commit()
         flash('Schedule created.', 'success')
-        return redirect(url_for('calendar'))
+        return redirect(url_for('main.calendar'))
     return render_template('schedule_form.html', title='New Schedule', form=form)
 
 
-@app.route('/schedules/<int:schedule_id>/edit', methods=['GET', 'POST'])
+@bp.route('/schedules/<int:schedule_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_schedule(schedule_id):
     schedule = Schedule.query.get_or_404(schedule_id)
@@ -130,16 +127,16 @@ def edit_schedule(schedule_id):
         schedule.start_time = form.start_time.data
         schedule.end_time = form.end_time.data
         schedule.location = form.location.data
-        schedule.room = Room.query.get(form.room.data) if form.room.data else None
+        schedule.room = db.session.get(Room, form.room.data) if form.room.data else None
         participant_ids = [pid for pid in form.participants.data if pid != current_user.id]
         schedule.participants = User.query.filter(User.id.in_(participant_ids)).all() if participant_ids else []
         db.session.commit()
         flash('Schedule updated.', 'success')
-        return redirect(url_for('calendar'))
+        return redirect(url_for('main.calendar'))
     return render_template('schedule_form.html', title='Edit Schedule', form=form, schedule=schedule)
 
 
-@app.route('/schedules/<int:schedule_id>/delete', methods=['POST'])
+@bp.route('/schedules/<int:schedule_id>/delete', methods=['POST'])
 @login_required
 def delete_schedule(schedule_id):
     schedule = Schedule.query.get_or_404(schedule_id)
@@ -148,17 +145,17 @@ def delete_schedule(schedule_id):
     db.session.delete(schedule)
     db.session.commit()
     flash('Schedule deleted.', 'info')
-    return redirect(url_for('calendar'))
+    return redirect(url_for('main.calendar'))
 
 
-@app.route('/rooms')
+@bp.route('/rooms')
 @login_required
 def list_rooms():
     rooms = Room.query.order_by(Room.name).all()
     return render_template('room_list.html', title='Meeting Rooms', rooms=rooms)
 
 
-@app.route('/rooms/new', methods=['GET', 'POST'])
+@bp.route('/rooms/new', methods=['GET', 'POST'])
 @login_required
 def create_room():
     form = RoomForm()
@@ -170,11 +167,11 @@ def create_room():
         db.session.add(room)
         db.session.commit()
         flash('Room created.', 'success')
-        return redirect(url_for('list_rooms'))
+        return redirect(url_for('main.list_rooms'))
     return render_template('room_form.html', title='New Room', form=form)
 
 
-@app.route('/rooms/<int:room_id>/edit', methods=['GET', 'POST'])
+@bp.route('/rooms/<int:room_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_room(room_id):
     room = Room.query.get_or_404(room_id)
@@ -188,18 +185,18 @@ def edit_room(room_id):
         room.capacity = form.capacity.data
         db.session.commit()
         flash('Room updated.', 'success')
-        return redirect(url_for('list_rooms'))
+        return redirect(url_for('main.list_rooms'))
     return render_template('room_form.html', title='Edit Room', form=form, room=room)
 
 
-@app.route('/rooms/<int:room_id>/delete', methods=['POST'])
+@bp.route('/rooms/<int:room_id>/delete', methods=['POST'])
 @login_required
 def delete_room(room_id):
     room = Room.query.get_or_404(room_id)
     if room.schedules.count():
         flash('Cannot delete a room that is assigned to existing schedules.', 'warning')
-        return redirect(url_for('list_rooms'))
+        return redirect(url_for('main.list_rooms'))
     db.session.delete(room)
     db.session.commit()
     flash('Room deleted.', 'info')
-    return redirect(url_for('list_rooms'))
+    return redirect(url_for('main.list_rooms'))

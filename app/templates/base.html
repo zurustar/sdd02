@@ -9,7 +9,7 @@
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
       <div class="container-fluid">
-        <a class="navbar-brand" href="{{ url_for('index') }}">Scheduler</a>
+        <a class="navbar-brand" href="{{ url_for('main.index') }}">Scheduler</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -17,13 +17,13 @@
           <ul class="navbar-nav me-auto">
             {% if current_user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('calendar') }}">Calendar</a>
+              <a class="nav-link" href="{{ url_for('main.calendar') }}">Calendar</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('list_rooms') }}">Meeting Rooms</a>
+              <a class="nav-link" href="{{ url_for('main.list_rooms') }}">Meeting Rooms</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('create_schedule') }}">New Schedule</a>
+              <a class="nav-link" href="{{ url_for('main.create_schedule') }}">New Schedule</a>
             </li>
             {% endif %}
           </ul>
@@ -33,14 +33,14 @@
               <span class="navbar-text me-2">Hello, {{ current_user.username }}!</span>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('logout') }}">Log Out</a>
+              <a class="nav-link" href="{{ url_for('main.logout') }}">Log Out</a>
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('login') }}">Log In</a>
+              <a class="nav-link" href="{{ url_for('main.login') }}">Log In</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{ url_for('register') }}">Register</a>
+              <a class="nav-link" href="{{ url_for('main.register') }}">Register</a>
             </li>
             {% endif %}
           </ul>
