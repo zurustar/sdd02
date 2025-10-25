@@ -6,14 +6,14 @@
     - [x] Install testing libraries (pytest, pytest-flask).
     - [x] Create a basic test file (e.g., tests/test_basic.py).
     - [x] Run pytest to verify setup.
-- [ ] Implement user registration and login functionality.
-- [ ] Write tests for authentication (registration, login, logout).
-- [ ] Create a basic layout with navigation.
-- [ ] Implement the main calendar view for schedules.
-- [ ] Implement schedule creation and editing functionality.
-- [ ] Write tests for schedule CRUD operations.
-- [ ] Implement schedule deletion functionality.
-- [ ] Implement meeting room management (CRUD).
-- [ ] Write tests for room management.
-- [ ] Implement team schedule sharing features.
-- [ ] Write tests for sharing features.
+- [x] Implement user registration and login functionality.
+- [x] Write tests for authentication (registration, login, logout).
+- [x] Create a basic layout with navigation.
+- [x] Implement the main calendar view for schedules.
+- [x] Implement schedule creation and editing functionality.
+- [x] Write tests for schedule CRUD operations.
+- [x] Implement schedule deletion functionality.
+- [x] Implement meeting room management (CRUD).
+- [x] Write tests for room management.
+- [x] Implement team schedule sharing features.
+- [x] Write tests for sharing features.
