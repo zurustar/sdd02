@@ -9,3 +9,5 @@
 - [x] Implement schedule deletion functionality.
 - [x] Implement meeting room management (CRUD).
 - [x] Implement team schedule sharing features.
+- [x] Document user-facing requirements and usage instructions in README.md.
+- [x] Update agent instructions to keep README.md current with code changes.
