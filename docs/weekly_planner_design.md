@@ -1,39 +1,39 @@
-# Weekly Planner View Design
+# 週間プランナービューのデザイン
 
-The weekly planner replaces the existing list-style calendar so users can see availability across the week at a glance. This document captures the expectations that should guide the implementation.
+週間プランナーは既存のリスト形式カレンダーに代わり、ユーザーが週全体の空き状況をひと目で把握できるようにするものです。このドキュメントは実装時に指針となる期待事項をまとめています。
 
-## Layout Overview
+## レイアウトの概要
 
-- **View span:** exactly seven consecutive days, shown from left to right. The default starting day is Monday.
-- **Time axis:** vertical axis running from 06:00 to 22:00 in one-hour increments. Each hour should have a labeled row, with visual subdivision to support half-hour events.
-- **Grid:** combine the day columns and time rows into a matrix. Empty cells should have a subtle background and faint borders to help users orient themselves without overwhelming the content.
+- **表示範囲:** 連続する 7 日間を左から右へ表示します。既定の開始曜日は月曜日です。
+- **時間軸:** 06:00 から 22:00 までを 1 時間刻みで縦軸に配置します。各時間にはラベル付きの行を用意し、30 分単位のイベントを表現できるよう視覚的な区切りを設けます。
+- **グリッド:** 曜日の列と時間の行を組み合わせてマトリクスを構成します。空セルには淡い背景色と薄い罫線を用いて、内容を邪魔せずに位置を把握しやすくします。
 
-## Event Blocks
+## イベントブロック
 
-- Each schedule entry is rendered as a block occupying the column of its day and spanning vertically between its start and end times.
-- Show the event title prominently, with optional location and room beneath in smaller text. When space is limited, truncate with ellipsis but keep a tooltip or hover state showing the full details.
-- Use a distinct background color per event owner, or fall back to a consistent accent color when ownership information is unavailable. Maintain WCAG AA contrast for text.
+- 各スケジュールは該当する曜日の列に配置され、開始時刻から終了時刻までの縦方向の範囲を占めるブロックとして描画します。
+- イベントタイトルを目立つように表示し、必要に応じて場所や部屋を小さな文字で下に示します。スペースが限られる場合は省略記号で切り詰めつつ、ツールチップやホバーで詳細を確認できるようにします。
+- イベントの所有者ごとに背景色を変えるか、所有者情報が得られない場合は一貫したアクセントカラーを使用します。テキストは WCAG AA のコントラストを満たしてください。
 
-## Interactions
+## インタラクション
 
-- Clicking an empty cell opens the “Create Schedule” dialog prefilled with the corresponding start time and day.
-- Clicking an event opens the existing “Edit Schedule” dialog.
-- Dragging an event should be scoped for a later enhancement, so ensure the markup and CSS structure will make future drag-and-drop support practical.
+- 空のセルをクリックすると、その時間帯と曜日をあらかじめ設定した「Create Schedule」ダイアログを開きます。
+- イベントをクリックすると、既存の「Edit Schedule」ダイアログを開きます。
+- イベントのドラッグ操作は将来の拡張として計画するため、今後ドラッグ＆ドロップを追加しやすいようにマークアップと CSS 構造を整えておきます。
 
-## Responsive Behavior
+## レスポンシブ対応
 
-- On narrow screens (under 768px), switch to a stacked view that shows each day vertically while preserving time ordering. The desktop grid remains the canonical reference.
-- Ensure horizontal scrolling is available if the weekly grid cannot fit entirely on the screen, keeping the time axis pinned for context.
-- Reduce the minimum column width at 576px and below so that daily columns stay readable without forcing pinch-zooming.
+- 幅 768px 未満では、時間順を保ったまま各日を縦に積み重ねるビューに切り替えます。デスクトップのグリッドが基準となる表現です。
+- 週間グリッドが画面に収まらない場合は横スクロールを可能にし、文脈が失われないよう時間軸を固定します。
+- 576px 以下では列の最小幅をさらに縮小し、ピンチズームを強いられないよう日別の列が読みやすい幅を維持します。
 
-## Accessibility Notes
+## アクセシビリティに関する注意
 
-- Provide descriptive `aria-label`s for grid cells (e.g., “Tuesday at 14:00”).
-- Ensure the planner is navigable via keyboard by allowing focus on each cell and event block.
-- Respect the user’s locale for date formatting once localization support is available, but keep Monday-start as the default until then.
-- Event blocks should expose meaningful focus states and `aria-live` updates so screen readers announce changes when the week’s data refreshes. Use semantic elements (`role="grid"`, `rowheader`, `gridcell`) that align with the planner’s tabular layout.
-- For non-owners, render events as read-only elements that remain focusable but avoid linking to editing routes that would be forbidden.
+- グリッドセルには「火曜日の 14:00」のように説明的な `aria-label` を付与します。
+- 各セルとイベントブロックにフォーカスできるようにし、キーボードでもプランナーを操作できるようにします。
+- ローカライズ対応が整った際にはユーザーのロケールに沿った日付書式を尊重しますが、それまでは月曜日始まりを既定とします。
+- イベントブロックには意味のあるフォーカス状態と `aria-live` の更新を提供し、週のデータが更新されたときにスクリーンリーダーが変化を読み上げられるようにします。プランナーの表形式に合致するセマンティック要素（`role="grid"`、`rowheader`、`gridcell`）を使用してください。
+- 所有者ではないユーザーには編集が禁止されるため、フォーカス可能でありながら編集ルートに遷移しない読み取り専用の要素としてイベントを表示します。
 
-## Visual Inspiration
+## ビジュアルの参考
 
-Think of a traditional paper planner that shows a week spread across two pages. Aim for a clean, minimal aesthetic with clear separation between days and times, making it easy to scan for free slots.
+紙の週間手帳をイメージし、日付と時間の区切りが明確で、空き時間を探しやすいクリーンでミニマルな美しさを目指してください。

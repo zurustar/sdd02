@@ -1,31 +1,31 @@
-# Application Requirements
+# アプリケーション要件
 
-This document outlines the requirements for the enterprise scheduler web service.
+本書はエンタープライズ向けスケジューラー Web サービスの要件をまとめたものです。
 
-## Core Features
+## 中核機能
 
--   **Schedule Management:**
-    -   Users can manage their own schedules.
-    -   Schedules can be shared within a team.
-    -   Users can create and view schedules for other users.
--   **Schedule Details:**
-    -   Each schedule entry will include a title, time slot, participants, and location.
-    -   Locations can include meeting rooms.
--   **Room Management:**
-    -   A system to manage meeting rooms is required.
--   **User Authentication:**
-    -   Users must log in with a username and password.
+- **スケジュール管理:**
+    - ユーザーは自分のスケジュールを管理できること。
+    - スケジュールはチーム内で共有できること。
+    - ユーザーは他のユーザーのスケジュールを作成し、閲覧できること。
+- **スケジュール詳細:**
+    - 各スケジュールにはタイトル、時間帯、参加者、場所が含まれること。
+    - 場所には会議室を指定できること。
+- **部屋管理:**
+    - 会議室を管理する仕組みが必要であること。
+- **ユーザー認証:**
+    - ユーザーはユーザー名とパスワードでログインする必要があること。
 
-## Technical Specifications
+## 技術仕様
 
--   **Programming Language:** Python
--   **Web Framework:** Flask
--   **Database:** SQLite
+- **プログラミング言語:** Python
+- **Web フレームワーク:** Flask
+- **データベース:** SQLite
 
-## Out of Scope
+## 対象外
 
--   Integration with external calendars.
+- 外部カレンダーとの連携。
 
-## Target Users
+## 想定利用者
 
--   All employees of the company.
+- 企業に所属する全従業員。
