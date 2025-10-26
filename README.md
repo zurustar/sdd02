@@ -5,7 +5,7 @@ Team Scheduler is a Flask web application that helps small teams plan meetings, 
 ## Features
 
 - User registration, login, and logout flows to manage personal accounts.
-- A calendar view that lists schedules a user owns or that have been shared with them.
+- A weekly planner view that lays out one week at a time with days arranged horizontally and time slots vertically, so busy periods are visible at a glance.
 - Creation, editing, and deletion of schedules with location details, room assignments, and team participants.
 - Meeting room management with CRUD tools and safeguards against deleting rooms that are in use.
 - Flash messaging and navigation that highlight key actions as you move through the app.
@@ -54,7 +54,7 @@ The application uses a SQLite database stored at `app.db` by default. To use ano
 ## Usage
 
 1. **Register and log in.** Create a new account, or log in if you already have one. Logged-in users can always return to the calendar from the navigation bar.
-2. **Manage schedules.** Use the "Create Schedule" button from the calendar to add events. Each event requires a title, start and end time, and can include a location, room, and shared participants. You can edit or delete schedules you own directly from the calendar view.
+2. **Manage schedules.** Use the "Create Schedule" button from the calendar to add events. Each event requires a title, start and end time, and can include a location, room, and shared participants. Events appear on the weekly planner in the column for their day and row range matching their time so you can compare availability quickly. You can edit or delete schedules you own directly from the calendar view.
 3. **Share with teammates.** When creating or editing a schedule, select additional users to share the event with. Shared events are labeled for recipients in the calendar.
 4. **Coordinate meeting rooms.** Navigate to "Meeting Rooms" to add rooms with names and capacities, update existing rooms, or remove unused ones. Rooms that are assigned to schedules cannot be deleted until the schedules are updated.
 5. **Sign out.** Use the "Log Out" link in the navigation bar when you are finished.
@@ -64,6 +64,7 @@ The application uses a SQLite database stored at `app.db` by default. To use ano
 - Use `flask init-db` any time you need to reset your local database schema.
 - Update `requirements.txt` when adding or upgrading dependencies.
 - Keep this README in sync with the user-facing functionality and setup steps as the project evolves.
+- Review `docs/weekly_planner_design.md` for the visual and interaction requirements of the weekly planner calendar view.
 
 ## Testing
 
