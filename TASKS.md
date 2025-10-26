@@ -21,10 +21,10 @@
 
 ## Upcoming Work
 
-- [ ] Implement the weekly planner template so days render horizontally and hours vertically. (Update `app/templates/calendar.html`, introduce partials in `app/templates/partials/`.)
-    - [ ] Restructure the calendar view HTML to generate a seven-day grid with labeled hour rows sourced from configuration.
-    - [ ] Add CSS modules under `app/static/css/` to position schedule blocks within the grid and visually distinguish overlaps.
-- [ ] Expose planner-friendly schedule data from the calendar route. (Refine `app/routes.py::calendar` helpers to group events per day/hour block.)
-- [ ] Provide keyboard navigation and ARIA labelling for the planner. (Enhance template semantics and add guidance in `docs/weekly_planner_design.md`.)
-- [ ] Add responsive tweaks for tablet and mobile breakpoints. (Extend the planner stylesheet with media queries.)
-- [ ] Expand automated coverage for the new layout. (Add view tests in `tests/test_calendar.py` and adjust snapshot data as needed.)
+- [x] Implement the weekly planner template so days render horizontally and hours vertically. (Update `app/templates/calendar.html`, introduce partials in `app/templates/partials/`.)
+    - [x] Restructure the calendar view HTML to generate a seven-day grid with labeled hour rows sourced from configuration.
+    - [x] Add CSS modules under `app/static/css/` to position schedule blocks within the grid and visually distinguish overlaps.
+- [x] Expose planner-friendly schedule data from the calendar route. (Refine `app/routes.py::calendar` helpers to group events per day/hour block.)
+- [x] Provide keyboard navigation and ARIA labelling for the planner. (Enhance template semantics and add guidance in `docs/weekly_planner_design.md`.)
+- [x] Add responsive tweaks for tablet and mobile breakpoints. (Extend the planner stylesheet with media queries.)
+- [x] Expand automated coverage for the new layout. (Add view tests in `tests/test_calendar.py` and adjust snapshot data as needed.)

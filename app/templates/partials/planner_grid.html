@@ -1,0 +1,33 @@
+<div class="planner-grid" role="grid" aria-label="Weekly planner for the week of {{ planner.week_start.strftime('%B %d, %Y') }}">
+  <div class="planner-grid__head" role="row">
+    <div class="planner-grid__corner" role="columnheader">Time</div>
+    {% for day in planner.days %}
+    <div class="planner-grid__day-header" role="columnheader" aria-label="{{ day.label }}">{{ day.label }}</div>
+    {% endfor %}
+  </div>
+  <div class="planner-grid__body">
+    <div class="planner-grid__time-column" aria-hidden="false">
+      {% for hour in planner.hours %}
+      <div class="planner-grid__time" role="rowheader">{{ hour.label }}</div>
+      {% endfor %}
+    </div>
+    <div class="planner-grid__day-columns">
+      {% for day in planner.days %}
+      <section class="planner-grid__day" aria-label="{{ day.label }}">
+        <div class="planner-grid__cells">
+          {% for label in day.cell_labels %}
+          <div class="planner-grid__cell" role="gridcell" tabindex="0" aria-label="{{ label }}"></div>
+          {% endfor %}
+        </div>
+        <div class="planner-grid__events" aria-live="polite">
+          {% for event in day.events %}
+          {% with event=event, planner=planner %}
+            {% include 'partials/planner_event.html' %}
+          {% endwith %}
+          {% endfor %}
+        </div>
+      </section>
+      {% endfor %}
+    </div>
+  </div>
+</div>

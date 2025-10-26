@@ -6,6 +6,9 @@ class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
         'sqlite:///' + os.path.join(basedir, 'app.db')
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    PLANNER_START_HOUR = 6
+    PLANNER_END_HOUR = 22
+    PLANNER_INTERVAL_MINUTES = 60
 
 class TestConfig(Config):
     TESTING = True
