@@ -1,72 +1,72 @@
-# Team Scheduler
+# チームスケジューラー
 
-Team Scheduler is a Flask web application that helps small teams plan meetings, reserve rooms, and share schedules. Users can sign up, log in, and collaborate by sharing events with teammates and coordinating the use of meeting rooms.
+Team Scheduler は、小規模なチームが会議を計画し、会議室を予約し、スケジュールを共有するのを支援する Flask 製の Web アプリケーションです。ユーザーはサインアップしてログインし、イベントをチームメイトと共有して会議室の利用を調整できます。
 
-## Features
+## 機能
 
-- User registration, login, and logout flows to manage personal accounts.
-- A weekly planner view that lays out one week at a time with days arranged horizontally and time slots vertically, so busy periods are visible at a glance, complete with ARIA-labelled grid cells and keyboard focus states.
-- Creation, editing, and deletion of schedules with location details, room assignments, and team participants.
-- Meeting room management with CRUD tools and safeguards against deleting rooms that are in use.
-- Flash messaging and navigation that highlight key actions as you move through the app.
+- 個人アカウントを管理するためのユーザー登録、ログイン、ログアウトのフロー。
+- 1 週間をまとめて表示し、曜日を横方向、時間枠を縦方向に並べる週間プランナービュー。忙しい時間帯をひと目で把握でき、ARIA でラベル付けされたグリッドセルとキーボードフォーカス状態を備えています。
+- 場所の詳細、部屋の割り当て、チーム参加者を含むスケジュールの作成・編集・削除。
+- 使用中の部屋を誤って削除しないためのガードを備えた会議室管理の CRUD ツール。
+- アプリ内の移動に合わせて主要なアクションを強調するフラッシュメッセージとナビゲーション。
 
-## Requirements
+## 前提条件
 
-- Python 3.10 or later.
-- The Python packages listed in `requirements.txt`.
-- (Optional) A `SECRET_KEY` environment variable for production deployments. If it is not provided, a default value is used.
+- Python 3.10 以降。
+- `requirements.txt` に記載された Python パッケージ。
+- （任意）本番環境で利用する `SECRET_KEY` 環境変数。設定されていない場合は既定値が利用されます。
 
-## Getting Started
+## はじめに
 
-1. **Clone the repository and move into the project directory.**
+1. **リポジトリをクローンし、プロジェクトディレクトリに移動します。**
    ```bash
    git clone <repository-url>
    cd sdd02
    ```
-2. **Create and activate a virtual environment (recommended).**
+2. **仮想環境を作成して有効化します（推奨）。**
    ```bash
    python3 -m venv .venv
    source .venv/bin/activate
    ```
-3. **Install dependencies.**
+3. **依存関係をインストールします。**
    ```bash
    pip install -r requirements.txt
    ```
-4. **Set environment variables for Flask.**
+4. **Flask 用の環境変数を設定します。**
    ```bash
    export FLASK_APP=run.py
-   export FLASK_ENV=development  # optional, enables debug mode
-   export SECRET_KEY="change-me"  # optional, overrides the default key
+   export FLASK_ENV=development  # 任意。デバッグモードを有効化します
+   export SECRET_KEY="change-me"  # 任意。既定の鍵を上書きします
    ```
-5. **Initialize the database.**
+5. **データベースを初期化します。**
    ```bash
    flask init-db
    ```
-6. **Run the development server.**
+6. **開発サーバーを起動します。**
    ```bash
    flask run
    ```
-7. **Visit the app.**
-   Open [http://localhost:5000](http://localhost:5000) in your browser.
+7. **アプリにアクセスします。**
+   ブラウザで [http://localhost:5000](http://localhost:5000) を開きます。
 
-The application uses a SQLite database stored at `app.db` by default. To use another database, set the `DATABASE_URL` environment variable before launching Flask.
+アプリケーションは既定で `app.db` に保存される SQLite データベースを使用します。別のデータベースを利用する場合は、Flask を起動する前に `DATABASE_URL` 環境変数を設定してください。
 
-## Usage
+## 使い方
 
-1. **Register and log in.** Create a new account, or log in if you already have one. Logged-in users can always return to the calendar from the navigation bar.
-2. **Manage schedules.** Use the "Create Schedule" button from the calendar to add events. Each event requires a title, start and end time, and can include a location, room, and shared participants. Events appear on the weekly planner in the column for their day and row range matching their time so you can compare availability quickly. You can edit or delete schedules you own directly from the calendar view.
-3. **Share with teammates.** When creating or editing a schedule, select additional users to share the event with. Shared events are labeled for recipients in the calendar.
-4. **Coordinate meeting rooms.** Navigate to "Meeting Rooms" to add rooms with names and capacities, update existing rooms, or remove unused ones. Rooms that are assigned to schedules cannot be deleted until the schedules are updated.
-5. **Sign out.** Use the "Log Out" link in the navigation bar when you are finished.
+1. **登録とログイン。** 新しいアカウントを作成するか、既存アカウントでログインします。ログイン済みのユーザーはナビゲーションバーからいつでもカレンダーに戻れます。
+2. **スケジュールを管理。** カレンダーの「Create Schedule」ボタンでイベントを追加します。各イベントにはタイトル、開始時刻、終了時刻が必須で、場所、部屋、共有参加者を追加できます。イベントは、その曜日の列と時間帯に一致する行に週間プランナー上で表示され、空き時間を素早く比較できます。自分が所有するスケジュールはカレンダーから直接編集または削除できます。
+3. **チームメイトと共有。** スケジュールを作成または編集するときに、共有したいユーザーを追加します。共有されたイベントは受信者のカレンダー上でラベル表示されます。
+4. **会議室を調整。** 「Meeting Rooms」ページで、名前と収容人数を持つ部屋を追加し、既存の部屋を更新または削除します。スケジュールに割り当てられている部屋は、該当するスケジュールが更新されるまで削除できません。
+5. **サインアウト。** 作業が終わったらナビゲーションバーの「Log Out」リンクを使用します。
 
-## Maintenance Notes
+## 保守に関するメモ
 
-- Use `flask init-db` any time you need to reset your local database schema.
-- Update `requirements.txt` when adding or upgrading dependencies.
-- Keep this README in sync with the user-facing functionality and setup steps as the project evolves.
-- Review `docs/weekly_planner_design.md` for the visual and interaction requirements of the weekly planner calendar view.
+- ローカルのデータベーススキーマをリセットする必要があるときは `flask init-db` を使用してください。
+- 依存関係を追加・更新した場合は `requirements.txt` を更新してください。
+- プロジェクトの進化に伴って、ユーザー向け機能やセットアップ手順の変更はこの README に反映させ続けてください。
+- 週間プランナーの視覚的およびインタラクション要件については `docs/weekly_planner_design.md` を参照してください。
 
-## Testing
+## テスト
 
-- The automated test suite uses `pytest`. After installing the dependencies in `requirements.txt`, run `pytest` from the project root to execute all tests.
-- Refer to `docs/testing_strategy.md` for the broader testing philosophy that guides the suite and outlines the scenarios we aim to cover.
+- 自動テストスイートは `pytest` を使用します。`requirements.txt` の依存関係をインストールした後、プロジェクトルートで `pytest` を実行するとすべてのテストが走ります。
+- テスト全体の考え方や想定するシナリオについては `docs/testing_strategy.md` を参照してください。

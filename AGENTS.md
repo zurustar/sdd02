@@ -1,8 +1,10 @@
-# Agent Collaboration Rules
-To ensure smooth collaboration and avoid redundant work, all agents must adhere to the following workflow:
-1.  **Plan All Tasks:** At the beginning of a major development phase, list all necessary tasks in `TASKS.md`.
-2.  **Declare Your Task:** Before starting any task, announce which one you are working on.
-3.  **Mark as Complete:** Once you have successfully completed a task, mark it as done by checking the checkbox, like this: `[x]`.
-4.  **Keep Documentation Current:** Whenever you change code or behavior that affects user-facing functionality or setup steps, update `README.md` in the same change so that it stays accurate.
-5.  **Write Tests First:** For every bug fix or feature, add or update the automated tests that cover the change **before** modifying production code.
-This process helps everyone stay informed about the project plan, ongoing work, and completed work.
+# エージェント協調ルール
+
+作業が重複しないよう、すべてのエージェントは次の手順に従ってください。
+
+1. **すべてのタスクを計画すること。** 大きな開発フェーズを始める前に、必要なタスクをすべて `TASKS.md` に列挙してください。
+2. **担当タスクを宣言すること。** 何らかのタスクに着手する前に、自分が取り組むタスクを知らせてください。
+3. **完了したらチェックを入れること。** タスクを完了したら、チェックボックスを `[x]` に更新して完了を示してください。
+4. **ドキュメントを最新に保つこと。** コードや挙動を変更し、ユーザー向け機能やセットアップ手順に影響する場合は、同じ変更で `README.md` を更新してください。
+5. **まずテストを書くこと。** バグ修正や新機能では、プロダクションコードを変更する前に自動テストを追加または更新してください。
+6. **ドキュメントは日本語で記述すること。** このリポジトリ配下で作成・更新する README、要件、タスク、`docs/` 配下の Markdown などのドキュメントは、すべて日本語で書いてください。

@@ -1,57 +1,57 @@
-# Web Service Testing Strategy
+# Web サービスのテスト戦略
 
-This document outlines a pragmatic testing strategy for Flask-based web services. The goal is to provide fast feedback during development, maintain confidence in critical functionality, and support iterative delivery.
+このドキュメントは、Flask ベースの Web サービスに適した現実的なテスト戦略を示します。開発中に素早いフィードバックを得て、重要な機能に対する信頼性を維持し、反復的なリリースを支えることが目的です。
 
-## Guiding Principles
+## 指針となる原則
 
-1. **Test the behavior that users rely on.** Focus on authentication, authorization, data validation, and workflows that span multiple requests.
-2. **Prefer deterministic, isolated tests.** Use in-memory or temporary databases and disable non-essential integrations when testing.
-3. **Adopt test-driven development (TDD).** Write or update tests _before_ changing production code to prevent regressions and document expectations.
-4. **Keep tests fast and focused.** Small, isolated tests should run in seconds to support frequent execution in CI pipelines.
+1. **ユーザーが依存する挙動をテストする。** 認証、認可、データバリデーション、複数のリクエストにまたがるワークフローに集中します。
+2. **決定的で分離されたテストを優先する。** メモリ上または一時的なデータベースを使用し、テスト時には本質的でない統合を無効化します。
+3. **テスト駆動開発（TDD）を採用する。** プロダクションコードを変更する前にテストを作成・更新し、リグレッションを防ぎ期待される挙動を文書化します。
+4. **テストを高速かつ集中させる。** 小さく分離されたテストは数秒で終わるようにし、CI パイプラインで頻繁に実行できるようにします。
 
-## Test Pyramid
+## テストピラミッド
 
-The strategy follows a lightweight test pyramid:
+この戦略は軽量なテストピラミッドに従います。
 
-- **Unit Tests** verify the smallest pieces of logic (e.g., model helpers, validation utilities). They run quickly and have minimal dependencies.
-- **Integration Tests** exercise database interactions, form validation, and Flask route handlers via the application test client. They ensure that components work together correctly.
-- **End-to-End Smoke Tests** (optional) hit high-value user journeys—such as registration, login, and creating schedules—to ensure major flows function. These can be written as integration tests that simulate browser interactions through the Flask client.
+- **ユニットテスト** は最小単位のロジック（例: モデルのヘルパー、検証ユーティリティ）を検証します。高速に実行でき、依存関係が最小です。
+- **統合テスト** はアプリケーションのテストクライアントを通してデータベース操作、フォームバリデーション、Flask のルートハンドラーを検証し、コンポーネント同士が正しく連携することを確認します。
+- **エンドツーエンドのスモークテスト**（任意）は、登録・ログイン・スケジュール作成といった価値の高いユーザージャーニーを実行し、主要フローが機能することを保証します。これらは Flask クライアントを使った統合テストとして記述できます。
 
-## Core Scenarios to Cover
+## カバーすべき主要シナリオ
 
-1. **Authentication**
-   - Registering new users, handling duplicate usernames, and enforcing password rules.
-   - Logging in/out, rejecting invalid credentials, and redirecting authenticated users correctly.
+1. **認証**
+   - 新規ユーザー登録、重複ユーザー名の扱い、パスワード規則の適用。
+   - ログイン／ログアウト、無効な認証情報の拒否、認証済みユーザーの正しいリダイレクト。
 
-2. **Authorization**
-   - Protecting routes with `@login_required`.
-   - Ensuring users cannot modify or delete resources they do not own.
+2. **認可**
+   - `@login_required` でルートを保護すること。
+   - ユーザーが自分の所有しないリソースを変更・削除できないようにすること。
 
-3. **Scheduling Workflows**
-   - Creating, editing, and deleting schedules with proper validation of date ranges and room assignments.
-   - Sharing schedules with team members and ensuring shared items appear in calendars.
+3. **スケジューリングワークフロー**
+   - 日付範囲や部屋の割り当てを適切に検証しながら、スケジュールを作成・編集・削除すること。
+   - スケジュールをチームメンバーと共有し、共有された項目がカレンダーに表示されることを確認すること。
 
-4. **Meeting Rooms Management**
-   - CRUD operations for rooms, including duplicate name checks and capacity validation.
-   - Preventing deletion of rooms that are still assigned to schedules.
+4. **会議室管理**
+   - 重複名のチェックや収容人数の検証を含む部屋の CRUD 操作。
+   - スケジュールに割り当てられている部屋の削除を防ぐこと。
 
-5. **Regression Safeguards**
-   - Every reported bug should be captured by a failing test before a fix is introduced.
-   - High-risk areas (authentication, scheduling logic, database constraints) should always have automated coverage.
+5. **リグレッション防止策**
+   - 報告されたバグは修正を加える前に必ず失敗するテストで再現すること。
+   - 認証、スケジューリングロジック、データベース制約などリスクの高い領域には常に自動テストを用意すること。
 
-## Tooling & Execution
+## ツールと実行
 
-- **Test Runner:** Use `pytest` with `pytest-flask` style fixtures for readability and fixture reuse.
-- **Database:** Configure tests to use an in-memory SQLite database and call `db.create_all()`/`db.drop_all()` per test session.
-- **Factories/Fixtures:** Provide fixtures for application, client, and sample entities (users, rooms, schedules) to reduce duplication.
-- **CI Integration:** Configure continuous integration to run `pytest` on every commit and pull request. Failing tests must block merges.
+- **テストランナー:** `pytest` を使用し、読みやすさとフィクスチャの再利用性を高めるために `pytest-flask` 形式のフィクスチャを採用します。
+- **データベース:** テストではメモリ上の SQLite データベースを設定し、テストセッションごとに `db.create_all()`／`db.drop_all()` を呼び出します。
+- **ファクトリ／フィクスチャ:** アプリケーション、クライアント、サンプルエンティティ（ユーザー、部屋、スケジュール）のフィクスチャを用意して重複を減らします。
+- **CI 連携:** 継続的インテグレーションではコミットやプルリクエストごとに `pytest` を実行し、テスト失敗時はマージをブロックします。
 
-## Workflow
+## ワークフロー
 
-1. When starting work on a feature or bug fix, add or update tests that express the desired behavior.
-2. Run the full test suite locally (`pytest`). Ensure it fails when the behavior is missing or broken.
-3. Implement or adjust production code until the tests pass.
-4. Keep the suite green—no skipped failures or flaky tests.
-5. Review and refactor tests periodically to maintain clarity and eliminate duplication.
+1. 機能開発やバグ修正を始める際に、期待する挙動を表現するテストを追加・更新します。
+2. ローカルでテストスイート全体（`pytest`）を実行します。対象の挙動が欠けている場合や壊れている場合は、テストが失敗することを確認してください。
+3. テストが通過するまでプロダクションコードを実装または調整します。
+4. スイートを常にグリーンに保ち、失敗や不安定なテストを放置しないでください。
+5. テストの明瞭さを維持し重複をなくすため、定期的にテストを見直してリファクタリングします。
 
-By following this approach, the team can detect regressions early, document expected behaviors, and ship reliable updates with confidence.
+この方針に従うことで、チームは早期にリグレッションを検知し、期待される挙動を文書化しながら、安心してアップデートを提供できます。
