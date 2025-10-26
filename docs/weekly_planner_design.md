@@ -24,12 +24,15 @@ The weekly planner replaces the existing list-style calendar so users can see av
 
 - On narrow screens (under 768px), switch to a stacked view that shows each day vertically while preserving time ordering. The desktop grid remains the canonical reference.
 - Ensure horizontal scrolling is available if the weekly grid cannot fit entirely on the screen, keeping the time axis pinned for context.
+- Reduce the minimum column width at 576px and below so that daily columns stay readable without forcing pinch-zooming.
 
 ## Accessibility Notes
 
 - Provide descriptive `aria-label`s for grid cells (e.g., “Tuesday at 14:00”).
 - Ensure the planner is navigable via keyboard by allowing focus on each cell and event block.
 - Respect the user’s locale for date formatting once localization support is available, but keep Monday-start as the default until then.
+- Event blocks should expose meaningful focus states and `aria-live` updates so screen readers announce changes when the week’s data refreshes. Use semantic elements (`role="grid"`, `rowheader`, `gridcell`) that align with the planner’s tabular layout.
+- For non-owners, render events as read-only elements that remain focusable but avoid linking to editing routes that would be forbidden.
 
 ## Visual Inspiration
 

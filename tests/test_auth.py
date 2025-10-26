@@ -67,7 +67,7 @@ def test_login_succeeds_with_valid_credentials(client, user_factory):
 
     assert response.status_code == 200
     assert b"Welcome back!" in response.data
-    assert b"Team Calendar" in response.data
+    assert b"Weekly Planner" in response.data
 
 
 def test_logout_clears_session(client, user_factory):

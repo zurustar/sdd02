@@ -1,0 +1,24 @@
+{% set event_style = "--event-start:%s; --event-duration:%s; --event-column:%s; --event-columns:%s;" % (event.start_minutes, event.duration_minutes, event.column_offset, event.column_span) %}
+{% if event.is_owner %}
+<a href="{{ url_for('main.edit_schedule', schedule_id=event.id) }}" class="planner-event" style="{{ event_style }}" tabindex="0" aria-label="{{ event.aria_label }}">
+{% else %}
+<div class="planner-event planner-event--readonly" style="{{ event_style }}" tabindex="0" role="button" aria-label="{{ event.aria_label }}">
+{% endif %}
+  <span class="planner-event__title">{{ event.title }}</span>
+  <span class="planner-event__meta">
+    <span class="planner-event__time">{{ event.display_start.strftime('%H:%M') }} &ndash; {{ event.display_end.strftime('%H:%M') }}</span>
+    {% if event.location %}
+    <span class="planner-event__location">{{ event.location }}</span>
+    {% endif %}
+    {% if event.room %}
+    <span class="planner-event__room">Room: {{ event.room }}</span>
+    {% endif %}
+    {% if event.participants %}
+    <span class="planner-event__participants">With {{ event.participants | join(', ') }}</span>
+    {% endif %}
+  </span>
+{% if event.is_owner %}
+</a>
+{% else %}
+</div>
+{% endif %}

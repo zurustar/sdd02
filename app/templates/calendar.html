@@ -1,47 +1,20 @@
 {% extends 'base.html' %}
+{% block styles %}
+  {{ super() }}
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/planner.css') }}">
+{% endblock %}
 {% block content %}
-<div class="d-flex flex-wrap justify-content-between align-items-center mb-3">
-  <h2 class="mb-2 mb-md-0">Team Calendar</h2>
-  <a class="btn btn-primary" href="{{ url_for('main.create_schedule') }}">Create Schedule</a>
-</div>
-{% if schedules %}
-<div class="list-group">
-  {% for schedule in schedules %}
-  <div class="list-group-item list-group-item-action mb-2">
-    <div class="d-flex justify-content-between flex-wrap">
-      <div>
-        <h5 class="mb-1">{{ schedule.title }}</h5>
-        <p class="mb-1">
-          <strong>Starts:</strong> {{ schedule.start_time.strftime('%Y-%m-%d %H:%M') }}<br>
-          <strong>Ends:</strong> {{ schedule.end_time.strftime('%Y-%m-%d %H:%M') }}
-        </p>
-        {% if schedule.location %}
-        <p class="mb-1"><strong>Location:</strong> {{ schedule.location }}</p>
-        {% endif %}
-        {% if schedule.room %}
-        <p class="mb-1"><strong>Room:</strong> {{ schedule.room.name }} (Capacity: {{ schedule.room.capacity }})</p>
-        {% endif %}
-        {% set participant_names = schedule.participants | map(attribute='username') | list %}
-        {% if participant_names %}
-        <p class="mb-1"><strong>Shared with:</strong> {{ participant_names | join(', ') }}</p>
-        {% endif %}
-        {% if not schedule.is_owned_by(current_user) %}
-        <span class="badge bg-info text-dark">Shared with you</span>
-        {% endif %}
-      </div>
-      {% if schedule.is_owned_by(current_user) %}
-      <div class="text-end">
-        <a class="btn btn-sm btn-outline-secondary mb-2" href="{{ url_for('main.edit_schedule', schedule_id=schedule.id) }}">Edit</a>
-        <form method="post" action="{{ url_for('main.delete_schedule', schedule_id=schedule.id) }}" onsubmit="return confirm('Delete this schedule?');">
-          <button type="submit" class="btn btn-sm btn-outline-danger">Delete</button>
-        </form>
-      </div>
-      {% endif %}
+<div class="planner-page">
+  <div class="planner-page__header d-flex flex-wrap justify-content-between align-items-center mb-3">
+    <div>
+      <h2 class="mb-1">Weekly Planner</h2>
+      <p class="text-muted mb-0">Week of {{ planner.week_start.strftime('%B %d, %Y') }}</p>
     </div>
+    <a class="btn btn-primary" href="{{ url_for('main.create_schedule') }}">Create Schedule</a>
   </div>
-  {% endfor %}
+  {% include 'partials/planner_grid.html' %}
+  {% if not schedules %}
+  <p class="planner-page__empty text-muted mt-3">No schedules yet. Add one to see it on the grid.</p>
+  {% endif %}
 </div>
-{% else %}
-<div class="alert alert-info">No schedules available yet. Create one to get started!</div>
-{% endif %}
 {% endblock %}

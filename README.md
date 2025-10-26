@@ -5,7 +5,7 @@ Team Scheduler is a Flask web application that helps small teams plan meetings, 
 ## Features
 
 - User registration, login, and logout flows to manage personal accounts.
-- A weekly planner view that lays out one week at a time with days arranged horizontally and time slots vertically, so busy periods are visible at a glance.
+- A weekly planner view that lays out one week at a time with days arranged horizontally and time slots vertically, so busy periods are visible at a glance, complete with ARIA-labelled grid cells and keyboard focus states.
 - Creation, editing, and deletion of schedules with location details, room assignments, and team participants.
 - Meeting room management with CRUD tools and safeguards against deleting rooms that are in use.
 - Flash messaging and navigation that highlight key actions as you move through the app.
