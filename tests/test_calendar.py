@@ -286,7 +286,7 @@ def test_owner_can_delete_schedule(client, user_factory):
 
     assert response.status_code == 200
     assert b"Schedule deleted." in response.data
-    assert Schedule.query.get(schedule.id) is None
+    assert db.session.get(Schedule, schedule.id) is None
 
 
 def test_non_owner_cannot_delete_schedule(client, user_factory):
@@ -307,4 +307,4 @@ def test_non_owner_cannot_delete_schedule(client, user_factory):
     response = client.post(f"/schedules/{schedule.id}/delete")
 
     assert response.status_code == 403
-    assert Schedule.query.get(schedule.id) is not None
+    assert db.session.get(Schedule, schedule.id) is not None

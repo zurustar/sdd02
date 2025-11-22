@@ -265,7 +265,9 @@ def create_schedule():
 @bp.route('/schedules/<int:schedule_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_schedule(schedule_id):
-    schedule = Schedule.query.get_or_404(schedule_id)
+    schedule = db.session.get(Schedule, schedule_id)
+    if schedule is None:
+        abort(404)
     if not schedule.is_owned_by(current_user):
         abort(403)
     form = ScheduleForm(obj=schedule)
@@ -293,7 +295,9 @@ def edit_schedule(schedule_id):
 @bp.route('/schedules/<int:schedule_id>/delete', methods=['POST'])
 @login_required
 def delete_schedule(schedule_id):
-    schedule = Schedule.query.get_or_404(schedule_id)
+    schedule = db.session.get(Schedule, schedule_id)
+    if schedule is None:
+        abort(404)
     if not schedule.is_owned_by(current_user):
         abort(403)
     db.session.delete(schedule)
@@ -328,7 +332,9 @@ def create_room():
 @bp.route('/rooms/<int:room_id>/edit', methods=['GET', 'POST'])
 @login_required
 def edit_room(room_id):
-    room = Room.query.get_or_404(room_id)
+    room = db.session.get(Room, room_id)
+    if room is None:
+        abort(404)
     form = RoomForm(obj=room)
     if form.validate_on_submit():
         existing_room = Room.query.filter(Room.name == form.name.data, Room.id != room.id).first()
@@ -346,7 +352,9 @@ def edit_room(room_id):
 @bp.route('/rooms/<int:room_id>/delete', methods=['POST'])
 @login_required
 def delete_room(room_id):
-    room = Room.query.get_or_404(room_id)
+    room = db.session.get(Room, room_id)
+    if room is None:
+        abort(404)
     if room.schedules.count():
         flash('Cannot delete a room that is assigned to existing schedules.', 'warning')
         return redirect(url_for('main.list_rooms'))
