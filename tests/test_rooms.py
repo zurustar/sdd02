@@ -29,7 +29,7 @@ def test_room_in_use_cannot_be_deleted(client, user_factory):
 
     assert response.status_code == 200
     assert b"Cannot delete a room that is assigned to existing schedules" in response.data
-    assert Room.query.get(room.id) is not None
+    assert db.session.get(Room, room.id) is not None
 
 
 def test_create_room_success(client, user_factory):
@@ -100,4 +100,4 @@ def test_delete_room_without_bookings(client, user_factory):
 
     assert response.status_code == 200
     assert b"Room deleted." in response.data
-    assert Room.query.get(room.id) is None
+    assert db.session.get(Room, room.id) is None
